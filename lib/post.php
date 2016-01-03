@@ -204,7 +204,7 @@ class WordPress_GitHub_Sync_Post {
 	 */
 	public function github_filename() {
 		if ( 'post' === $this->type() ) {
-			$filename = get_the_time( 'Y-m-d-', $this->id ) . $this->get_name() . '.md';
+			$filename = $this->id . get_the_time( 'Y-m-d-', $this->id ) . $this->get_name() . '.md';
 		} else {
 			$filename = $this->get_name() . '.md';
 		}
