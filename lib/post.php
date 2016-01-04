@@ -410,6 +410,8 @@ class WordPress_GitHub_Sync_Post {
 
     /**
      * Get the language of the post, based on the permalink.
+     * The permalink is supposed to be 'http://domainename/lang/%postname%/ so
+     * the lang is the 4th element.
      *
      * @return the language
      */
@@ -417,6 +419,6 @@ class WordPress_GitHub_Sync_Post {
     {
         $permalink = get_permalink($this->id);
         $arr = split("/", $permalink);
-        return ($arr[count($arr) - 2]);
+        return ($arr[3]);
     }
 }
