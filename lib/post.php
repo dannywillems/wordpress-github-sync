@@ -415,7 +415,7 @@ class WordPress_GitHub_Sync_Post {
      */
     public function get_lang()
     {
-        $permalink = get_permalink($this->ID);
+        $permalink = get_permalink($this->id);
         $arr = split("/", $permalink);
         return ($arr[count($arr) - 2]);
     }
