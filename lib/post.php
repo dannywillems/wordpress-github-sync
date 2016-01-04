@@ -204,7 +204,7 @@ class WordPress_GitHub_Sync_Post {
 	 */
 	public function github_filename() {
 		if ( 'post' === $this->type() ) {
-			$filename = $this->id . '-' . get_the_time( 'Y-m-d-', $this->id ) . $this->get_name() . '.md';
+			$filename = $this->get_lang() . '-' . $this->id . '-' . get_the_time( 'Y-m-d-', $this->id ) . $this->get_name() . '.md';
 		} else {
 			$filename = $this->get_name() . '.md';
 		}
@@ -407,4 +407,16 @@ class WordPress_GitHub_Sync_Post {
 
 		return new WordPress_GitHub_Sync_Blob( $data );
 	}
+
+    /**
+     * Get the language of the post, based on the permalink.
+     *
+     * @return the language
+     */
+    public function get_lang()
+    {
+        $permalink = get_permalink($this->ID);
+        $arr = split("/", $permalink);
+        return ($arr[count($arr) - 2]);
+    }
 }
