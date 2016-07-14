@@ -61,9 +61,9 @@ class WordPress_GitHub_Sync_Post {
 		$this->api = $api;
 
 		if ( is_numeric( $id_or_args ) ) {
-			$this->id = (int) $id_or_args;
+			$this->id   = (int) $id_or_args;
 			$this->post = get_post( $this->id );
-			$this->new = false;
+			$this->new  = false;
 		}
 
 		if ( is_array( $id_or_args ) ) {
@@ -73,10 +73,11 @@ class WordPress_GitHub_Sync_Post {
 				$this->post = get_post( $this->args['ID'] );
 
 				if ( $this->post ) {
-					$this->id = $this->post->ID;
+					$this->id  = $this->post->ID;
+					$this->new = false;
+				} else {
+					unset( $this->args['ID'] );
 				}
-
-				$this->new = false;
 			}
 		}
 	}
@@ -115,7 +116,7 @@ class WordPress_GitHub_Sync_Post {
 	 */
 	public function github_content() {
 		$content = $this->front_matter() . $this->post_content();
-		$ending = apply_filters( 'wpghs_line_endings', "\n" );
+		$ending  = apply_filters( 'wpghs_line_endings', "\n" );
 
 		return preg_replace( '~(*BSR_ANYCRLF)\R~', $ending, $content );
 	}
@@ -251,7 +252,7 @@ class WordPress_GitHub_Sync_Post {
 	 * @return string
 	 */
 	public function get_directory_from_path( $path ) {
-		$directory = explode( '/',$path );
+		$directory = explode( '/', $path );
 		$directory = count( $directory ) > 0 ? $directory[0] : '';
 
 		return $directory;
@@ -330,10 +331,10 @@ class WordPress_GitHub_Sync_Post {
 			'published'    => 'publish' === $this->status() ? true : false,
 		);
 
-		//convert traditional post_meta values, hide hidden values
+		//convert traditional post_meta values, hide hidden values, skip already populated values
 		foreach ( get_post_custom( $this->id ) as $key => $value ) {
 
-			if ( '_' === substr( $key, 0, 1 ) ) {
+			if ( '_' === substr( $key, 0, 1 ) || isset( $meta[ $key ] ) ) {
 				continue;
 			}
 
@@ -389,7 +390,7 @@ class WordPress_GitHub_Sync_Post {
 	 */
 	public function set_post( WP_Post $post ) {
 		$this->post = $post;
-		$this->id = $post->ID;
+		$this->id   = $post->ID;
 
 		return $this;
 	}

@@ -55,14 +55,14 @@ class WordPress_GitHub_Sync_Controller {
 				'invalid_payload',
 				sprintf(
 					__( "%s won't be imported.", 'wordpress-github-sync' ),
-					strtolower( $payload->get_commit_id() )
+					strtolower( $payload->get_commit_id() ) ? : '[Missing Commit ID]'
 				)
 			) );
 		}
 
 		$this->app->semaphore()->lock();
 		remove_action( 'save_post', array( $this, 'export_post' ) );
-		remove_action( 'save_post', array( $this, 'delete_post' ) );
+		remove_action( 'delete_post', array( $this, 'delete_post' ) );
 
 		$result = $this->app->import()->payload( $payload );
 
@@ -97,8 +97,12 @@ class WordPress_GitHub_Sync_Controller {
 		$this->app->semaphore()->unlock();
 
 		if ( is_wp_error( $result ) ) {
+			update_option( '_wpghs_import_error', $result->get_error_message() );
+
 			return $this->app->response()->error( $result );
 		}
+
+		update_option( '_wpghs_import_complete', 'yes' );
 
 		return $this->app->response()->success( $result );
 	}

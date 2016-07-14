@@ -2,6 +2,26 @@
 
 This change log follows the [Keep a Changelog standards]. Versions follows [Semantic Versioning].
 
+### [1.7.0] ###
+
+* Add GitHub link shortcode (props @jonocarroll!)
+* Add boot hook (props @kennyfraser!)
+
+### [1.6.1] ###
+
+* Fixed bug where post_meta with the same name as built-in meta keys were getting overwritten
+
+### [1.6.0] ###
+
+* New filters:
+    * `wpghs_pre_fetch_all_supported`: Filter the query args before all supported posts are queried.
+    * `wpghs_is_post_supported`: Determines whether the post is supported by importing/exporting.
+* Bugfix: Set secret to password field. See [#124].
+* Bugfix: Fix error when importing branch-deletion webhooks.
+* Bugfix: Fix "semaphore is locked" response from webhook. See [#121].
+* Bugfix: Correctly display import/export messages in settings page. See [#127].
+* Bugfix: Correctly set if post is new only when the matching ID is found in the database.
+
 ### [1.5.1] ###
 
 * Added Chinese translation (props @malsony!).
@@ -43,7 +63,7 @@ This change log follows the [Keep a Changelog standards]. Versions follows [Sema
 ### [1.3.4] ###
 
 * Add German translation (props @lsinger).
-* Update folder names to default to untranslated. 
+* Update folder names to default to untranslated.
 
 ### [1.3.3] ###
 
@@ -96,7 +116,13 @@ This change log follows the [Keep a Changelog standards]. Versions follows [Sema
 
   [Keep a Changelog standards]: http://keepachangelog.com/
   [Semantic Versioning]: http://semver.org/
+  [#124]: https://github.com/mAAdhaTTah/wordpress-github-sync/issues/124
+  [#121]: https://github.com/mAAdhaTTah/wordpress-github-sync/issues/121
+  [#127]: https://github.com/mAAdhaTTah/wordpress-github-sync/issues/127
   [Unreleased]: https://github.com/mAAdhaTTah/wordpress-github-sync
+  [1.7.0]: https://github.com/mAAdhaTTah/wordpress-github-sync/releases/tag/1.7.0
+  [1.6.1]: https://github.com/mAAdhaTTah/wordpress-github-sync/releases/tag/1.6.1
+  [1.6.0]: https://github.com/mAAdhaTTah/wordpress-github-sync/releases/tag/1.6.0
   [1.5.1]: https://github.com/mAAdhaTTah/wordpress-github-sync/releases/tag/1.5.1
   [1.5.0]: https://github.com/mAAdhaTTah/wordpress-github-sync/releases/tag/1.5.0
   [1.4.1]: https://github.com/mAAdhaTTah/wordpress-github-sync/releases/tag/1.4.1
